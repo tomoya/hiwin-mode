@@ -145,7 +145,6 @@
     (hiwin-load)))
 
 (defun hiwin ()
-  (interactive)
   (if (not (null hiwin-overlay))
       (progn (remove-hook 'post-command-hook 'hiwin-highlight-window)
              (hiwin-unload))
