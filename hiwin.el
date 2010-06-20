@@ -151,20 +151,24 @@
     (add-hook 'post-command-hook 'hiwin-highlight-window)
     (hiwin-highlight-window)))
 
-(defadvice split-window-vertically (around split-window-vertically-around)
-  (interactive) ad-do-it (hiwin-load) )
-(ad-activate 'split-window-vertically)
+(defadvice split-window-vertically
+  (around hiwin-split-window-vertically activate)
+  ad-do-it
+  (if hiwin-overlay (hiwin-load)))
 
-(defadvice split-window-horizontally (around split-window-horizontally)
-  (interactive) ad-do-it (hiwin-load) )
-(ad-activate 'split-window-horizontally)
+(defadvice split-window-horizontally 
+  (around hiwin-split-window-horizontally activate)
+  ad-do-it
+  (if hiwin-overlay (hiwin-load)))
 
-(defadvice delete-window (around delete-window)
-  (interactive) ad-do-it (hiwin) (hiwin))
-(ad-activate 'delete-window)
+(defadvice delete-window
+  (around hiwin-delete-window activate)
+  ad-do-it
+  (when hiwin-overlay (hiwin) (hiwin)))
 
-(defadvice recenter (around recenter-around)
-  (interactive) (progn ad-do-it (hiwin-load)) )
-(ad-activate 'recenter)
+(defadvice recenter
+  (around hiwin-recenter activate)
+  ad-do-it
+  (if hiwin-overlay (hiwin-load)))
 
 (provide 'hiwin)
