@@ -101,7 +101,9 @@
       ;; 処理対象windowとアクティブwindowが一致する場合
       (if (eq target-window hiwin-window)
           ;; EOB一つ前の場合，一文字進む
-          (progn (if (eq (point) (1- (point-max))) (forward-char 1) ) )
+          (progn (if (and (eq (point) (1- (point-max)))
+			  (> (point-max) 1))
+		     (forward-char 1)))
         ;; 処理対象windowとアクティブwindowが一致しない場合
         (progn
           (let ((buf (window-buffer target-window)))
@@ -110,7 +112,9 @@
               ;; 処理対象windowをアクティブ化
               (select-window target-window)
               ;; EOBの場合，一文字戻る
-              (if (eq (point) (point-max)) (backward-char 1) )
+              (if (and (eq (point) (point-max))
+		       (> (point-max) 1))
+		  (backward-char 1))
               ;; 処理対象windowにoverlayを設定
               (move-overlay (nth num hiwin-overlay)
                             (point-min) (point-max) (current-buffer))
@@ -165,6 +169,11 @@
   (around hiwin-delete-window activate)
   ad-do-it
   (when hiwin-overlay (hiwin) (hiwin)))
+
+(defadvice other-window
+  (around hiwin-other-window activate)
+  ad-do-it
+  (if hiwin-overlay (hiwin-load)))
 
 (defadvice recenter
   (around hiwin-recenter activate)
