@@ -31,10 +31,9 @@
 ;; if you visible active window, type M-x hiwin-mode.
 
 ;;; Changes
-;; 2010-08-06 myuhe
+;; 2010-08-11 myuhe
 ;; anything関連の関数を実行した時にミニバッファが非アクティブウィンドウとして扱われる問題を修正
-;;read-onlyなバッファを作る関数のdefadviceを追加
-
+;; anything起動時にanythingバッファ以外のバッファが非アクティブウィンドウとなったまま戻らない問題を修正
 ;;
 ;; 2010-07-04 ksugita
 ;; ローカルで再スクラッチしたファイルに tomoya氏，masutaka氏の修正を反映
@@ -107,7 +106,6 @@
     (kill-buffer buf)))
 
 (defun hiwin-draw-ol ()
-
   ;; アクティブwindowのwindowを取得
   (setq hiwin-window (selected-window))
   ;; アクティブwindowのbufferを取得
@@ -154,7 +152,6 @@
     (select-window hiwin-window)))
 
 (defun hiwin-delete-ol ()
-
   (let ((num 0))   ;; カウンタ
     ;; 作成されたoverlay分を処理（ループ開始）
     (while (< num hiwin-ol-count)
@@ -167,11 +164,10 @@
   (setq hiwin-ol nil))
 
 (defun hiwin-refresh-win ()
-
-  (let ( (win (selected-window)) )
-    ;; ミニバッファ以外を選択している場合
-    ;;(unless (or (string< "*anything" (buffer-name)) (eq win (minibuffer-window)))
-    (unless (eq win (minibuffer-window))
+  (let ((win (selected-window)) )
+    ;; ミニバッファかanythingバッファ以外を選択している場合
+    (unless (or (eq win (minibuffer-window)) 
+                (eq 1 (string-match "anything" (buffer-name (window-buffer win)))))
       ;; 現在のウィンドウがアクティブウィンドウの場合
       ;; かつ，現在のバッファがカレントバッファの場合
       (if (and (eq hiwin-window win) (eq hiwin-buffer (current-buffer)))
@@ -185,7 +181,6 @@
         ))))
 
 (defun hiwin ()
-  
   (if (null hiwin-ol)
       (progn (hiwin-create-ol)
              (add-hook 'pre-command-hook  'hiwin-refresh-win)
@@ -214,81 +209,10 @@
   ad-do-it
   (when hiwin-ol (hiwin) (hiwin)))
 
-(defadvice other-window
-  (around hiwin-other-window activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice switch-to-buffer
-  (around hiwin-switch-to-buffer activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice windmove-up
-  (around hiwin-windmove-up activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice windmove-down
-  (around hiwin-windmove-down activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice windmove-left
-  (around hiwin-windmove-left activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice windmove-right
-  (around hiwin-windmove-right activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
 (defadvice twittering-edit-close
   (around hiwin-twittering-edit-close activate)
   ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice info
-  (around hiwin-info activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice info-exit
-  (around hiwin-info-exit activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice help-quit
-  (around hiwin-help-quit activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice apropos
-  (around hiwin-apropos activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice quit-window
-  (around hiwin-quit-window activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice dired
-  (around hiwin-dired activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice wdired-change-to-wdired-mode
-  (around hiwin-wdired-change-to-wdired-mode activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
-
-(defadvice recenter
-  (around hiwin-recenter activate)
-  ad-do-it
-  (if hiwin-ol (hiwin-draw-ol)))
+  (when hiwin-ol (hiwin)(hiwin))
+)
 
 (provide 'hiwin)
-
-
