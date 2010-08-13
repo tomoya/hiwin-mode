@@ -31,6 +31,14 @@
 ;; if you visible active window, type M-x hiwin-mode.
 
 ;;; Changes
+;; 2010-08-13 tomoya
+;; myuhe さんと ksugita さんの修正をマージ
+;;
+;; 2010-08-13 ksugita
+;; *Completions*表示時にMiniBufの表示が崩れるのを修正
+;; 手動で画面リフレッシュできるようhiwin-refresh-winをinteractive化
+;; 個人的な設定だったため，recenterのadviceを削除
+;;
 ;; 2010-08-11 myuhe
 ;; anything関連の関数を実行した時にミニバッファが非アクティブウィンドウとして扱われる問題を修正
 ;; anything起動時にanythingバッファ以外のバッファが非アクティブウィンドウとなったまま戻らない問題を修正
@@ -38,10 +46,10 @@
 ;; 2010-07-04 ksugita
 ;; ローカルで再スクラッチしたファイルに tomoya氏，masutaka氏の修正を反映
 ;; readonlyなアクティブwindowの背景色を設定できるように機能変更
-;; 
+;;
 ;; 2010-06-07 tomoya
 ;; マイナーモード化
-;; 
+;;
 ;; 2009-09-13 ksugita
 ;; ブログで公開
 ;; http://ksugita.blog62.fc2.com/blog-entry-8.html
@@ -164,9 +172,10 @@
   (setq hiwin-ol nil))
 
 (defun hiwin-refresh-win ()
+  (interactive)
   (let ((win (selected-window)) )
     ;; ミニバッファかanythingバッファ以外を選択している場合
-    (unless (or (eq win (minibuffer-window)) 
+    (unless (or (eq win (minibuffer-window))
                 (eq 1 (string-match "anything" (buffer-name (window-buffer win)))))
       ;; 現在のウィンドウがアクティブウィンドウの場合
       ;; かつ，現在のバッファがカレントバッファの場合
@@ -199,7 +208,7 @@
   ad-do-it
   (if hiwin-ol (hiwin-draw-ol)))
 
-(defadvice split-window-horizontally 
+(defadvice split-window-horizontally
   (around hiwin-split-window-horizontally activate)
   ad-do-it
   (if hiwin-ol (hiwin-draw-ol)))
@@ -209,10 +218,14 @@
   ad-do-it
   (when hiwin-ol (hiwin) (hiwin)))
 
+(defadvice other-window
+  (around hiwin-other-window activate)
+  ad-do-it
+  (if hiwin-ol (hiwin-draw-ol)))
+
 (defadvice twittering-edit-close
   (around hiwin-twittering-edit-close activate)
   ad-do-it
-  (when hiwin-ol (hiwin)(hiwin))
-)
+  (when hiwin-ol (hiwin)(hiwin)))
 
 (provide 'hiwin)
