@@ -28,7 +28,7 @@ http://d.hatena.ne.jp/ksugita0510/20111223/p1
 またmyuheさんによるパッチも当ててあります。
 https://gist.github.com/myuhe/5203057
 
-hiwin.rcpはel-get要のrecipeになります。
+hiwin.rcpはel-get用のrecipeになります。
 
 ```
 (require 'hiwin)
