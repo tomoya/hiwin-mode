@@ -17,3 +17,16 @@ M-x auto-install-from-url https://raw.github.com/tomoya/hiwin-mode/master/hiwin.
 (install-elisp "https://raw.github.com/tomoya/hiwin-mode/master/hiwin.el")
 
 のいずれかでご利用下さい。
+
+
+2013/09/01
+ksugitaさんご本人によりマイナーモードかとバージョンアップが実施されましたので更新しました。
+
+hiwin-mode 2.00 リリース - gnupackの開発メモ
+http://d.hatena.ne.jp/ksugita0510/20111223/p1
+
+```lisp
+(require 'hiwin)
+(hiwin-activate)                           ;; hiwin-modeを有効化
+(set-face-background 'hiwin-face "gray80") ;; 非アクティブウィンドウの背景色を設定
+```
