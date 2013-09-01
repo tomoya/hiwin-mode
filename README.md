@@ -9,12 +9,12 @@ http://ksugita.blog62.fc2.com/blog-entry-8.html
 直接ファイルをダウンロードしてインストール
 
 下記のコマンドを使ってインストール
-M-x install-elisp https://raw.github.com/tomoya/hiwin-mode/master/hiwin.el
-M-x auto-install-from-url https://raw.github.com/tomoya/hiwin-mode/master/hiwin.el
+M-x install-elisp https://raw.github.com/sona-tar/hiwin-mode/master/hiwin.el
+M-x auto-install-from-url https://raw.github.com/sona-tar/hiwin-mode/master/hiwin.el
 
 もしくは下記のS式を評価してインストール
-(auto-install-from-url "https://raw.github.com/tomoya/hiwin-mode/master/hiwin.el")
-(install-elisp "https://raw.github.com/tomoya/hiwin-mode/master/hiwin.el")
+(auto-install-from-url "https://raw.github.com/sona-tar/hiwin-mode/master/hiwin.el")
+(install-elisp "https://raw.github.com/sona-tar/hiwin-mode/master/hiwin.el")
 
 のいずれかでご利用下さい。
 
