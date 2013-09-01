@@ -25,6 +25,9 @@ ksugitaさんご本人によりマイナーモードかとバージョンアッ�
 hiwin-mode 2.00 リリース - gnupackの開発メモ
 http://d.hatena.ne.jp/ksugita0510/20111223/p1
 
+またmyuheさんによるパッチも当ててあります。
+https://gist.github.com/myuhe/5203057
+
 ```
 (require 'hiwin)
 (hiwin-activate)                           ;; hiwin-modeを有効化

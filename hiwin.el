@@ -82,6 +82,8 @@
 (make-face 'hiwin-face)
 (set-face-attribute 'hiwin-face nil :background "gray25")
 
+(defvar hiwin-server-flag nil)
+
 (define-minor-mode hiwin-mode
   "Visible active window."
   :global t
@@ -177,7 +179,9 @@
             )
           ))
     ;; 元のアクティブウィンドウを選択
-    (select-window hiwin-active-window)
+    (if  hiwin-server-flag
+      (setq hiwin-server-flag 'nil)
+      (select-window hiwin-active-window))
     ))
 
 (defun hiwin-activate ()
@@ -209,5 +213,9 @@
       )
     )
   )
+
+(add-hook 'server-visit-hook (lambda () 
+                               (setq hiwin-server-flag t)))
+
 (provide 'hiwin)
 
