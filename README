@@ -25,7 +25,7 @@ ksugitaさんご本人によりマイナーモードかとバージョンアッ�
 hiwin-mode 2.00 リリース - gnupackの開発メモ
 http://d.hatena.ne.jp/ksugita0510/20111223/p1
 
-```lisp
+```
 (require 'hiwin)
 (hiwin-activate)                           ;; hiwin-modeを有効化
 (set-face-background 'hiwin-face "gray80") ;; 非アクティブウィンドウの背景色を設定
