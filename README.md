@@ -28,6 +28,8 @@ http://d.hatena.ne.jp/ksugita0510/20111223/p1
 またmyuheさんによるパッチも当ててあります。
 https://gist.github.com/myuhe/5203057
 
+hiwin.rcpはel-get要のrecipeになります。
+
 ```
 (require 'hiwin)
 (hiwin-activate)                           ;; hiwin-modeを有効化
