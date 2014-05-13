@@ -31,3 +31,22 @@ http://ksugita.blog62.fc2.com/blog-entry-8.html
     ~~~~~~~~~~~~~~~~~~~~
     M-x package-install hiwin
     ~~~~~~~~~~~~~~~~~~~~
+
+## 更新
+
+2013/09/01
+ksugitaさんご本人によりマイナーモードかとバージョンアップが実施されましたので更新しました。
+
+hiwin-mode 2.00 リリース - gnupackの開発メモ
+http://d.hatena.ne.jp/ksugita0510/20111223/p1
+
+またmyuheさんによるパッチも当ててあります。
+https://gist.github.com/myuhe/5203057
+
+hiwin.rcpはel-get用のrecipeになります。
+
+```
+(require 'hiwin)
+(hiwin-activate)                           ;; hiwin-modeを有効化
+(set-face-background 'hiwin-face "gray80") ;; 非アクティブウィンドウの背景色を設定
+```
