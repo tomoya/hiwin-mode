@@ -1,0 +1,5 @@
+(:name hiwin
+       :website "https://github.com/sona-tar/hiwin-mode"
+       :description "Visible active window mode."
+       :type github
+       :pkgname "sona-tar/hiwin-mode")
